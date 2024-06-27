@@ -1,0 +1,17 @@
+---
+excluded:
+  - '*kernel*'
+  #  - kernel-PAE
+  #  - kernel-rt
+  #  - kernel-smp
+  #  - kernel-xen
+  - linux-firmware
+  - '*-firmware-*'
+  - '*dbus*'
+  - '*glibc*'
+  - hal
+  - '*systemd*'
+  - '*udev*'
+  - '*gnutls*'
+  #  - '*openssl-libs*'
+  - '*openssl*'

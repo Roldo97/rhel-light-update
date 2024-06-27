@@ -1,0 +1,57 @@
+---
+- name: Installs updates that doesn't require a system reboot
+  hosts: "{{ host_list | default('localhost')}}"
+  become: true
+  gather_facts: false
+  vars_files:
+    - excluded-packages.yml
+  tasks:
+
+    - name: Ensures that yum-utils is installed
+      ansible.builtin.yum:
+        name: yum-utils
+        state: present
+
+    - name: Ensures that packages are updated
+      register: result
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+        security: yes
+        exclude: "{{ excluded | join(',') }}"
+
+    - name: Check if core libraries where updated
+      block:
+        - name: Fails if reboot is required
+          register: reboot_needed
+          changed_when: false
+          failed_when: "'Reboot is required' in reboot_needed['stdout']"
+          ansible.builtin.command: needs-restarting -r
+
+      rescue:
+        - ansible.builtin.debug:
+            msg: "Reboot is required, please check ASAP."
+
+    - name: Check if services must be restarted
+      register: services_to_restart
+      changed_when: services_to_restart['stdout'] | length > 0
+      ansible.builtin.command: needs-restarting -s
+      notify: Restart services
+
+    - ansible.builtin.debug:
+        var: services_to_restart['stdout'] | length
+
+  handlers:
+
+    - name: Restart services
+      loop: "{{ services_to_restart['stdout_lines'] }}"
+      when:
+        - "'auditd.service' not in item"
+        - "'dbus.service' not in item"
+        - "'serial-getty' not in item"
+        - "'systemd-logind.service' not in item"
+        - "'systemd-journald.service' not in item"
+        - "'systemd-udevd.service' not in item"
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted

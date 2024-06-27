@@ -1,0 +1,7 @@
+---
+- name: Installs updates that doesn't require a system reboot
+  hosts: "{{ host_list | default('localhost')}}"
+  become: true
+  gather_facts: false
+  roles:
+    - rhel-light-update

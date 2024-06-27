@@ -1,0 +1,14 @@
+---
+# handlers file for rhel-light-update
+- name: Restart services
+  loop: "{{ services_to_restart['stdout_lines'] }}"
+  when:
+    - "'auditd.service' not in item"
+    - "'dbus.service' not in item"
+    - "'serial-getty' not in item"
+    - "'systemd-logind.service' not in item"
+    - "'systemd-journald.service' not in item"
+    - "'systemd-udevd.service' not in item"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
