@@ -1,8 +1,10 @@
 ---
 # tasks file for rhel-light-update
-- name: Generates excluded packages list
-  ansible.builtin.set_fact:
-    excluded_packages: "{{ hostvars[inventory_hostname]['excluded'] + excluded }}"
+- ansible.builtin.set_fact: excluded_packages="{{ hostvars[inventory_hostname]['excluded'] + excluded }}"
+  when: hostvars[inventory_hostname]['excluded'] is defined
+
+- ansible.builtin.set_fact: excluded_packages="{{ excluded }}"
+  when: hostvars[inventory_hostname]['excluded'] is not defined
     
 - name: Print test
   ansible.builtin.debug:
@@ -21,7 +23,7 @@
     name: '*'
     state: latest
     security: yes
-    exclude: "{{ excluded | join(',') }}"
+    exclude: "{{ excluded_packages | join(',') }}"
 
 - name: Check if core libraries where updated
   block:
