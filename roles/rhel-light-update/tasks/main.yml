@@ -5,13 +5,7 @@
 
 - ansible.builtin.set_fact: excluded_packages="{{ excluded }}"
   when: hostvars[inventory_hostname]['excluded'] is not defined
-    
-- name: Print test
-  ansible.builtin.debug:
-    msg: "{{ excluded_packages }}"
-
-- ansible.builtin.fail:
-
+ 
 - name: Ensures that yum-utils is installed
   ansible.builtin.yum:
     name: yum-utils
