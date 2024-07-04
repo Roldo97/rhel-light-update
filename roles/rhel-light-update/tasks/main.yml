@@ -4,7 +4,7 @@
   ansible.builtin.debug:
     var: "{{ hostvars['ansible_hostname'] }}"
 
-- ansible.builtin.fail
+- ansible.builtin.fail:
 
 - name: Ensures that yum-utils is installed
   ansible.builtin.yum:
