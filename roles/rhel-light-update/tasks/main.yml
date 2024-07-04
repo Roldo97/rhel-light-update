@@ -1,10 +1,14 @@
 ---
 # tasks file for rhel-light-update
-- ansible.builtin.set_fact: excluded_packages="{{ hostvars[inventory_hostname]['excluded'] + excluded }}"
-  when: hostvars[inventory_hostname]['excluded'] is defined
+- ansible.builtin.set_fact: excluded_packages="{{ hostvars[inventory_hostname]['host_excluded'] + excluded }}"
+  when: hostvars[inventory_hostname]['host_excluded'] is defined
 
 - ansible.builtin.set_fact: excluded_packages="{{ excluded }}"
-  when: hostvars[inventory_hostname]['excluded'] is not defined
+  when: hostvars[inventory_hostname]['host_excluded'] is not defined
+
+- ansible.builtin.debug: var=excluded_packages
+
+- ansible.builtin.fail:
  
 - name: Ensures that yum-utils is installed
   ansible.builtin.yum:
