@@ -1,6 +1,6 @@
 ---
 # tasks file for rhel-light-update
-- name: Print hostvars
+- name: Print test
   ansible.builtin.debug:
     var: "{{ exclude }}"
 
