@@ -2,7 +2,7 @@
 # tasks file for rhel-light-update
 - name: Print test
   ansible.builtin.debug:
-    var: "{{ exclude }}"
+    var: "{{ hostvars[inventory_hostname] }}"
 
 - ansible.builtin.fail:
 
