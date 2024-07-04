@@ -2,7 +2,7 @@
 # tasks file for rhel-light-update
 - name: Print hostvars
   ansible.builtin.debug:
-    var: "{{ hostvars[inventory_hostname] }}"
+    var: "{{ hostvars }}"
 
 - ansible.builtin.fail:
 
