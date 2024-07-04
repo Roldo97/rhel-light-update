@@ -16,3 +16,4 @@ general_excluded:
   - '*gnutls*'
   #  - '*openssl-libs*'
   - '*openssl*'
+  - '*rpm*'
