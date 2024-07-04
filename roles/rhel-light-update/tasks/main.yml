@@ -1,5 +1,7 @@
 ---
 # tasks file for rhel-light-update
+- ansible.builtin.debug: var=group_excluded
+
 - ansible.builtin.set_fact: excluded_packages="{{ hostvars[inventory_hostname]['host_excluded'] + excluded }}"
   when: hostvars[inventory_hostname]['host_excluded'] is defined
 
