@@ -25,7 +25,8 @@
     name: '*'
     state: latest
     security: yes
-    exclude: "{{ excluded_packages | join(',') }}"
+#    exclude: "{{ excluded_packages | join(',') }}"
+    exclude: "htop,*kernel*,linux-firmware,*-firmware-*,*dbus*,*glibc*,hal,*systemd*,*udev*,*gnutls*,*openssl*,*rpm*"
 
 - name: Check if core libraries where updated
   block:
