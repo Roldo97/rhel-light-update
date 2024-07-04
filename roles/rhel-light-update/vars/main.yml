@@ -1,6 +1,6 @@
 ---
 # vars file for rhel-light-update
-excluded:
+general_excluded:
   - '*kernel*'
   #  - kernel-PAE
   #  - kernel-rt
