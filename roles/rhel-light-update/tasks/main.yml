@@ -39,6 +39,6 @@
 
 - name: Check if services must be restarted
   register: services_to_restart
-  changed_when: services_to_restart['stdout'] | length > 0
+  changed_when: services_to_restart['stdout'] | length > 0 and 'Updating Subscription Management repositories.' not in services_to_restart['stdout']
   ansible.builtin.command: needs-restarting -s
   notify: Restart services
