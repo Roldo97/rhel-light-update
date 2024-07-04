@@ -3,6 +3,7 @@
 - name: Restart services
   loop: "{{ services_to_restart['stdout_lines'] }}"
   when:
+    - "'Updating Subscription Management repositories.' not in item"
     - "'auditd.service' not in item"
     - "'dbus.service' not in item"
     - "'serial-getty' not in item"
