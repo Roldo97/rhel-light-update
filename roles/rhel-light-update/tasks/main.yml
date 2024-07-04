@@ -1,8 +1,12 @@
 ---
 # tasks file for rhel-light-update
+- name: Generates excluded packages list
+  ansible.builtin.set_fact:
+    excluded_packages: "{{ hostvars[inventory_hostname]['exclude'] + excluded }}"
+    
 - name: Print test
   ansible.builtin.debug:
-    msg: "{{ hostvars[inventory_hostname] }}"
+    msg: "{{ excluded_packages }}"
 
 - ansible.builtin.fail:
 
